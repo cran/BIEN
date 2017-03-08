@@ -4,14 +4,17 @@
 \alias{BIEN_trait_trait}
 \title{Download all measurements of a specific trait(s).}
 \usage{
-BIEN_trait_trait(trait, print.query = FALSE, ...)
+BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
+  ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all available trait data for the given trait(s).
@@ -21,8 +24,8 @@ BIEN_trait_trait downloads all measurements of the trait(s) specified.
 }
 \examples{
 \dontrun{
-BIEN_trait_trait("Height")
-trait_vector<-c("Height", "Leaf dry mass")
+BIEN_trait_trait("whole plant height")
+trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 BIEN_trait_trait(trait_vector)}
 }
 \seealso{
@@ -35,4 +38,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traitbyspecies}},
   \code{\link{BIEN_trait_traits_per_species}}
 }
-

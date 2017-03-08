@@ -6,7 +6,7 @@
 \usage{
 BIEN_ranges_shapefile(shapefile, directory = NULL,
   species_names_only = FALSE, return.species.list = TRUE,
-  crop.ranges = FALSE, include.gid = FALSE, print.query = FALSE, ...)
+  crop.ranges = FALSE, include.gid = FALSE, ...)
 }
 \arguments{
 \item{shapefile}{An object of class SpatialPolygonsDataFrame.}
@@ -21,9 +21,7 @@ BIEN_ranges_shapefile(shapefile, directory = NULL,
 
 \item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 All range maps that intersect the user-supplied shapfile.
@@ -47,7 +45,7 @@ BIEN_ranges_shapefile(shapefile = shape)
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
   \code{\link{BIEN_ranges_species}}
 }
-

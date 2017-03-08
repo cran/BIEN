@@ -4,14 +4,12 @@
 \alias{BIEN_taxonomy_species}
 \title{Extract taxonomic information for species}
 \usage{
-BIEN_taxonomy_species(species, print.query = FALSE, ...)
+BIEN_taxonomy_species(species, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing taxonomic information for the specified species.
@@ -29,4 +27,3 @@ BIEN_taxonomy_species(species_vector)}
 Other taxonomy functions: \code{\link{BIEN_taxonomy_family}},
   \code{\link{BIEN_taxonomy_genus}}
 }
-

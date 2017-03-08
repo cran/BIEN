@@ -4,12 +4,10 @@
 \alias{BIEN_plot_metadata}
 \title{Download plot metadata}
 \usage{
-BIEN_plot_metadata(print.query = FALSE, ...)
+BIEN_plot_metadata(...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe containing plot metadata.
@@ -22,9 +20,6 @@ BIEN_plot_metadata downloads the plot metadata table.
 BIEN_plot_metadata()}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_database_version}},
-  \code{\link{BIEN_metadata_match_data}}
-
 Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_dataset}},
   \code{\link{BIEN_plot_datasource}},
@@ -33,5 +28,9 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_name}},
   \code{\link{BIEN_plot_sampling_protocol}},
   \code{\link{BIEN_plot_state}}
-}
 
+Other metadata functions: \code{\link{BIEN_metadata_citation}},
+  \code{\link{BIEN_metadata_database_version}},
+  \code{\link{BIEN_metadata_match_data}},
+  \code{\link{BIEN_ranges_list}}
+}

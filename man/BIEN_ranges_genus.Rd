@@ -5,7 +5,7 @@
 \title{Download range maps for given genus.}
 \usage{
 BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
-  match_names_only = FALSE, include.gid = FALSE, print.query = FALSE, ...)
+  match_names_only = FALSE, include.gid = FALSE, ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
@@ -18,9 +18,7 @@ BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
 
 \item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Range maps for all available species within the specified genera.
@@ -55,8 +53,8 @@ Abies_poly$Species#gives the species name associated with "Abies_poly"}
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}
 }
-

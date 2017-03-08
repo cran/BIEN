@@ -7,7 +7,7 @@
 BIEN_plot_list_datasource(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A vector of available datasources.
@@ -29,4 +29,3 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_sampling_protocol}},
   \code{\link{BIEN_plot_state}}
 }
-

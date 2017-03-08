@@ -4,14 +4,12 @@
 \alias{BIEN_ranges_load_species}
 \title{Load range maps for specified species.}
 \usage{
-BIEN_ranges_load_species(species, print.query = FALSE, ...)
+BIEN_ranges_load_species(species, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A SpatialPolygonsDataFrame containing range maps for the specified species.
@@ -36,7 +34,7 @@ plot(abies_maps[1,], add = T, col ="light green")}
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}
 }
-

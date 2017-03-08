@@ -11,7 +11,7 @@ BIEN_trait_mean(species, trait, ...)
 
 \item{trait}{A single trait.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of estimated trait means and associated metadata for the given species.
@@ -21,7 +21,7 @@ BIEN_trait_mean Estimates species mean values for a given trait, using Genus or 
 }
 \examples{
 \dontrun{
-BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="Height") }
+BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 }
 \seealso{
 Other trait functions: \code{\link{BIEN_trait_family}},
@@ -33,4 +33,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traits_per_species}},
   \code{\link{BIEN_trait_trait}}
 }
-

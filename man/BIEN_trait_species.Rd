@@ -4,14 +4,17 @@
 \alias{BIEN_trait_species}
 \title{Download trait data for given species.}
 \usage{
-BIEN_trait_species(species, print.query = FALSE, ...)
+BIEN_trait_species(species, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all available trait data for the given species.
@@ -35,4 +38,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traits_per_species}},
   \code{\link{BIEN_trait_trait}}
 }
-

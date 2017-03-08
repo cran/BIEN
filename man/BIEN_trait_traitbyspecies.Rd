@@ -4,16 +4,19 @@
 \alias{BIEN_trait_traitbyspecies}
 \title{Download trait data for given species and trait.}
 \usage{
-BIEN_trait_traitbyspecies(trait, species, print.query = FALSE, ...)
+BIEN_trait_traitbyspecies(species, trait, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
-\item{trait}{A single trait or a vector of traits.}
-
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
+\item{trait}{A single trait or a vector of traits.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all data matching the specified trait(s) and species.
@@ -23,8 +26,8 @@ BIEN_trait_traitbyspecies extracts entries that contain the specified species an
 }
 \examples{
 \dontrun{
-BIEN_trait_traitbyspecies(trait = "Height", species = "Carex capitata")
-trait_vector<-c("Height", "Leaf dry mass")
+BIEN_trait_traitbyspecies(trait = "whole plant height", species = "Carex capitata")
+trait_vector<-c("whole plant height", "leaf area")
 species_vector<-c("Carex capitata","Betula nana")
 BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 }
@@ -38,4 +41,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traits_per_species}},
   \code{\link{BIEN_trait_trait}}
 }
-

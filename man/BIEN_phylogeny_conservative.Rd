@@ -7,7 +7,7 @@
 BIEN_phylogeny_conservative(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A phylo object containing the BIEN conservative phylogeny
@@ -22,4 +22,3 @@ BIEN_phylo<-BIEN_phylogeny_conservative()}
 \seealso{
 Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}}
 }
-

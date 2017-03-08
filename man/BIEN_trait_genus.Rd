@@ -4,14 +4,17 @@
 \alias{BIEN_trait_genus}
 \title{Download trait data for given genera.}
 \usage{
-BIEN_trait_genus(genus, print.query = FALSE, ...)
+BIEN_trait_genus(genus, all.taxonomy = FALSE, political.boundaries = FALSE,
+  ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all data matching the specified genera.
@@ -25,4 +28,3 @@ BIEN_trait_genus("Acer")
 genus_vector<-c("Acer","Abies")
 BIEN_trait_genus(genus_vector)}
 }
-

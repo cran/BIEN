@@ -7,7 +7,7 @@
 BIEN_metadata_database_version(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A data frame containing the current version number and release date for the BIEN database.
@@ -20,7 +20,8 @@ BIEN_metadata_database_version downloads the current version number and release 
 BIEN_metadata_database_version()}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_match_data}},
-  \code{\link{BIEN_plot_metadata}}
+Other metadata functions: \code{\link{BIEN_metadata_citation}},
+  \code{\link{BIEN_metadata_match_data}},
+  \code{\link{BIEN_plot_metadata}},
+  \code{\link{BIEN_ranges_list}}
 }
-

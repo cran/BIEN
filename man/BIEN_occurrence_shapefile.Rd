@@ -5,9 +5,8 @@
 \title{Extract occurrence data for specified shapefile}
 \usage{
 BIEN_occurrence_shapefile(shapefile, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, print.query = FALSE,
-  native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  observation.type = FALSE, political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{shapefile}{An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.}
@@ -18,15 +17,13 @@ BIEN_occurrence_shapefile(shapefile, cultivated = FALSE,
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified species.
@@ -51,4 +48,3 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
-

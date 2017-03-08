@@ -4,12 +4,12 @@
 \alias{BIEN_trait_traits_per_species}
 \title{Count the number of trait observations for each species in the BIEN database}
 \usage{
-BIEN_trait_traits_per_species(print.query = FALSE, ...)
+BIEN_trait_traits_per_species(species = NULL, ...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
+\item{species}{Optional species or vector of species.  If left blank, returns counts for all species.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Returns a dataframe containing the number of trait records for each species in the BIEN database.
@@ -31,4 +31,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traitbyspecies}},
   \code{\link{BIEN_trait_trait}}
 }
-

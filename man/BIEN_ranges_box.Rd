@@ -6,7 +6,7 @@
 \usage{
 BIEN_ranges_box(min.lat, max.lat, min.long, max.long, directory = NULL,
   species_names_only = FALSE, return.species.list = TRUE,
-  crop.ranges = FALSE, include.gid = FALSE, print.query = FALSE, ...)
+  crop.ranges = FALSE, include.gid = FALSE, ...)
 }
 \arguments{
 \item{min.lat}{Minimum latitude of the ranges included.}
@@ -27,9 +27,7 @@ BIEN_ranges_box(min.lat, max.lat, min.long, max.long, directory = NULL,
 
 \item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Range maps for all available species within the specified bounding box.
@@ -46,8 +44,8 @@ BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}
 }
-
