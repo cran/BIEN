@@ -4,10 +4,13 @@
 \alias{BIEN_list_country}
 \title{Extract species list by country}
 \usage{
-BIEN_list_country(country, cultivated = FALSE, only.new.world = TRUE, ...)
+BIEN_list_country(country = NULL, country.code = NULL, cultivated = FALSE,
+  only.new.world = TRUE, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}
+
+\item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -21,6 +24,9 @@ Dataframe containing species list(s) for the specified country or countries.
 \description{
 BIEN_list_country downloads a list of all species within a country or countries from the BIEN database.
 }
+\note{
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+}
 \examples{
 \dontrun{
 BIEN_list_country("Canada")
@@ -30,6 +36,6 @@ BIEN_list_country(country_vector)}
 \seealso{
 Other list functions: \code{\link{BIEN_list_all}},
   \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_shapefile}},
+  \code{\link{BIEN_list_spatialpolygons}},
   \code{\link{BIEN_list_state}}
 }

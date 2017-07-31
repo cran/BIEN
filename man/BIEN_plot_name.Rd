@@ -5,8 +5,9 @@
 \title{Download plot data by plot name.}
 \usage{
 BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE,
-  political.boundaries = FALSE, all.metadata = FALSE, ...)
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
+  ...)
 }
 \arguments{
 \item{plot.name}{A plot name or vector of names. See BIEN_plot_metadata for more information on plots.}
@@ -19,7 +20,11 @@ BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
@@ -30,6 +35,11 @@ A dataframe containing all data from the specified plot(s).
 }
 \description{
 BIEN_plot_name downloads all plot data for a set of plot names.
+}
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Plot names can be looked up with \code{\link{BIEN_plot_metadata}}.
 }
 \examples{
 \dontrun{

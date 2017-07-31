@@ -5,7 +5,7 @@
 \title{Download all measurements of a specific trait(s).}
 \usage{
 BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
-  ...)
+  source.citation = F, ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
@@ -14,6 +14,8 @@ BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
+\item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
+
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{
@@ -21,6 +23,9 @@ A dataframe of all available trait data for the given trait(s).
 }
 \description{
 BIEN_trait_trait downloads all measurements of the trait(s) specified.
+}
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 }
 \examples{
 \dontrun{

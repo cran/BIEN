@@ -13,13 +13,13 @@ BIEN_ranges_intersect_species(species, directory = NULL,
 
 \item{directory}{Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.}
 
-\item{species.names.only}{Get a list of the species with ranges overlapping the focal species' range without downloading range maps. Default is FALSE.}
+\item{species.names.only}{Return species names rather than spatial data? Default is FALSE.}
 
-\item{include.focal}{Should the focal species be returned as well? Default is TRUE.}
+\item{include.focal}{Should a range for the focal species be downloaded? Default is TRUE.}
 
-\item{return.species.list}{Should a species list be returned?  Only meaningful when maps are being downloaded.}
+\item{return.species.list}{Should a species list be returned in addition to downloading range maps?  Default is FALSE}
 
-\item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
+\item{include.gid}{Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -29,20 +29,23 @@ Range maps for all available species that intersect the range of the focal speci
 \description{
 BIEN_ranges_intersect_species extracts range maps for a specified bounding box.
 }
+\note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+}
 \examples{
 \dontrun{
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+testwd<-tempdir() #Set a working directory
 BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
 directory = testwd,include.focal = TRUE)
 species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
-BIEN_ranges_intersect_species(species = speciesvector,species.names.only = TRUE)}
+BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 }
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile}},
+  \code{\link{BIEN_ranges_spatialpolygons}},
   \code{\link{BIEN_ranges_species}}
 }
 \author{

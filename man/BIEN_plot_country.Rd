@@ -4,12 +4,15 @@
 \alias{BIEN_plot_country}
 \title{Download plot data from specified countries.}
 \usage{
-BIEN_plot_country(country, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE,
-  political.boundaries = FALSE, all.metadata = FALSE, ...)
+BIEN_plot_country(country = NULL, country.code = NULL, cultivated = FALSE,
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
 \item{country}{A country or vector of countries.}
+
+\item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -19,7 +22,11 @@ BIEN_plot_country(country, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
@@ -30,6 +37,11 @@ A dataframe containing all data from the specified countries.
 }
 \description{
 BIEN_plot_country downloads all plot data from specified countries.
+}
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 }
 \examples{
 \dontrun{

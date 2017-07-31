@@ -5,8 +5,9 @@
 \title{Extract stem data for specified species from BIEN}
 \usage{
 BIEN_stem_species(species, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE,
-  political.boundaries = FALSE, all.metadata = F, ...)
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  political.boundaries = FALSE, collection.info = F, all.metadata = F,
+  ...)
 }
 \arguments{
 \item{species}{A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.}
@@ -19,7 +20,11 @@ BIEN_stem_species(species, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
@@ -32,6 +37,8 @@ Dataframe containing stem data for the specified species.
 BIEN_stem_species downloads occurrence records for specific species from the BIEN database.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 }
 \examples{

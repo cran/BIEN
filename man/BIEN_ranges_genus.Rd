@@ -12,11 +12,11 @@ BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
 
 \item{directory}{Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.}
 
-\item{matched}{Return a list of species that were downloaded. Default is TRUE.}
+\item{matched}{Return a list of taxa that were downloaded. Default is TRUE.}
 
-\item{match_names_only}{Check for range maps for the genera specified without downloading range maps. Default is FALSE.}
+\item{match_names_only}{Check for range maps for the taxa specified without downloading range maps. Default is FALSE.}
 
-\item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
+\item{include.gid}{Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -26,24 +26,27 @@ Range maps for all available species within the specified genera.
 \description{
 BIEN_ranges_genus extracts range maps for the specified genera.
 }
+\note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+}
 \examples{
 \dontrun{
+library(rgdal)
+library(maps)
 genus_vector<-c("Abies","Acer")
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+testwd<-tempdir() #Set a working directory
 BIEN_ranges_genus(genus_vector)
 BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-BIEN_ranges_genus(genus_vector,test_wd)#saves ranges to a specified working directory
+BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
 BIEN_ranges_genus("Abies")
-BIEN_ranges_genus("Abies","C:/wherever/you/want/files/saved/")
+BIEN_ranges_genus("Abies",tempdir())
 
 #Reading files
-setwd("C:/wherever/your/shapefiles/are/")
-Abies_poly<-readShapePoly("Abies_lasiocarpa")
-Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
+
+Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 
 #Plotting files
-plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-require(maps)#easy source of maps
+plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 
@@ -55,6 +58,6 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_intersect_species}},
   \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile}},
+  \code{\link{BIEN_ranges_spatialpolygons}},
   \code{\link{BIEN_ranges_species}}
 }

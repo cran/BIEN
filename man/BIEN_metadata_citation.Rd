@@ -4,11 +4,13 @@
 \alias{BIEN_metadata_citation}
 \title{Generate citations for data extracted from BIEN.}
 \usage{
-BIEN_metadata_citation(dataframe = NULL, bibtex_file = NULL,
-  acknowledgement_file = NULL)
+BIEN_metadata_citation(dataframe = NULL, trait.dataframe = NULL,
+  bibtex_file = NULL, acknowledgement_file = NULL)
 }
 \arguments{
 \item{dataframe}{A data.frame of occurrence data downloaded from the BIEN R package.}
+
+\item{trait.dataframe}{A data.frame of trait data downloaded from the BIEN R package.}
 
 \item{bibtex_file}{Output file for writing bibtex citations.}
 
@@ -28,6 +30,7 @@ citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencin
 }
 \seealso{
 Other metadata functions: \code{\link{BIEN_metadata_database_version}},
+  \code{\link{BIEN_metadata_list_political_names}},
   \code{\link{BIEN_metadata_match_data}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_ranges_list}}

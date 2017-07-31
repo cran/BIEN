@@ -5,8 +5,9 @@
 \title{Extract occurrence data for specified species from BIEN}
 \usage{
 BIEN_occurrence_species(species, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  observation.type = FALSE, political.boundaries = FALSE,
+  collection.info = F, ...)
 }
 \arguments{
 \item{species}{A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.}
@@ -19,9 +20,13 @@ BIEN_occurrence_species(species, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -30,6 +35,9 @@ Dataframe containing occurrence records for the specified species.
 }
 \description{
 BIEN_occurrence_species downloads occurrence records for specific species from the BIEN database.
+}
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
 }
 \examples{
 \dontrun{
@@ -45,6 +53,6 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_family}},
   \code{\link{BIEN_occurrence_genus}},
   \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_shapefile}},
+  \code{\link{BIEN_occurrence_spatialpolygons}},
   \code{\link{BIEN_occurrence_state}}
 }

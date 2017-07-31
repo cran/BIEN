@@ -6,10 +6,11 @@
 \usage{
 BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  political.boundaries = FALSE, all.metadata = FALSE, ...)
+  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
-\item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.}
+\item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -19,7 +20,11 @@ BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
@@ -30,6 +35,9 @@ A dataframe containing all data from the specified datasource.
 }
 \description{
 BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
+}
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
 }
 \examples{
 \dontrun{

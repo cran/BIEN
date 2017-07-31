@@ -5,7 +5,7 @@
 \title{Download trait data for given genus/genera and trait(s).}
 \usage{
 BIEN_trait_traitbygenus(genus, trait, all.taxonomy = FALSE,
-  political.boundaries = FALSE, ...)
+  political.boundaries = FALSE, source.citation = F, ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
@@ -16,6 +16,8 @@ BIEN_trait_traitbygenus(genus, trait, all.taxonomy = FALSE,
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
+\item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
+
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{
@@ -23,6 +25,9 @@ A dataframe of all data matching the specified trait(s) and genus/genera.
 }
 \description{
 BIEN_trait_traitbygenus extracts entries that contain the specified genus/genera and trait(s).
+}
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 }
 \examples{
 \dontrun{

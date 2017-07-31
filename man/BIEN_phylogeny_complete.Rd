@@ -22,6 +22,9 @@ A phylo or multiphylo object containing the specified phylogenies
 \description{
 BIEN_phylogeny_complete downloads a specified number of the BIEN phylogeny replicates.
 }
+\note{
+Information on the construction of the BIEN phylogenies is available online at http://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
+}
 \examples{
 \dontrun{
 phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)

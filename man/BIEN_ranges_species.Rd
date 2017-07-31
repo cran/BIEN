@@ -12,9 +12,9 @@ BIEN_ranges_species(species, directory = NULL, matched = TRUE,
 
 \item{directory}{Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.}
 
-\item{matched}{Return a list of species that were downloaded. Default is TRUE.}
+\item{matched}{Return a list of taxa that were downloaded. Default is TRUE.}
 
-\item{match_names_only}{Check for range maps for the species specified without downloading range maps. Default is FALSE.}
+\item{match_names_only}{Check for range maps for the taxa specified without downloading range maps. Default is FALSE.}
 
 \item{include.gid}{Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.}
 
@@ -26,24 +26,26 @@ Range maps for specified species.
 \description{
 BIEN_ranges_species extracts range maps for the specified species.
 }
+\note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+}
 \examples{
 \dontrun{
+library(rgdal)
+library(maps) #a convenient source of maps
 species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
 BIEN_ranges_species(species_vector)
 BIEN_ranges_species(species_vector,match_names_only = TRUE)
-BIEN_ranges_species(species_vector,test_wd)#saves ranges to a specified working directory
+BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
 BIEN_ranges_species("Abies_lasiocarpa")
-BIEN_ranges_species("Abies_lasiocarpa","C:/wherever/you/want/files/saved/")
+BIEN_ranges_species("Abies_lasiocarpa",tempdir())
 
 #Reading files
-setwd("C:/wherever/your/shapefiles/are/")
-Abies_poly<-readShapePoly("Abies_lasiocarpa")
-Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
+
+Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 
 #Plotting files
-plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-require(maps)#easy source of maps
+plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 
@@ -56,5 +58,5 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_intersect_species}},
   \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile}}
+  \code{\link{BIEN_ranges_spatialpolygons}}
 }

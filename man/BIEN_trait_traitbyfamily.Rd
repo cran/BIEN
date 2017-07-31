@@ -5,7 +5,7 @@
 \title{Download trait data for given families and traits.}
 \usage{
 BIEN_trait_traitbyfamily(family, trait, all.taxonomy = FALSE,
-  political.boundaries = FALSE, ...)
+  political.boundaries = FALSE, source.citation = F, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -16,6 +16,8 @@ BIEN_trait_traitbyfamily(family, trait, all.taxonomy = FALSE,
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
+\item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
+
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{
@@ -23,6 +25,9 @@ A dataframe of all data matching the specified trait(s) and family/families.
 }
 \description{
 BIEN_trait_traitbyfamily extracts entries that contain the specified families and trait(s).
+}
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 }
 \examples{
 \dontrun{

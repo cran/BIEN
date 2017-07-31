@@ -1,7 +1,7 @@
 ---
 title: "BIEN R package"
 author: "Brian Maitner"
-date: "`r Sys.Date()`"
+date: "2017-07-30"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{BIEN R package}

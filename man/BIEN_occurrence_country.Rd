@@ -4,14 +4,17 @@
 \alias{BIEN_occurrence_country}
 \title{Extract species occurrence records by country.}
 \usage{
-BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+BIEN_occurrence_country(country = NULL, country.code = NULL,
+  cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE, observation.type = FALSE,
+  political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of country.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
+
+\item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
@@ -19,9 +22,13 @@ BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
+
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -31,9 +38,13 @@ Dataframe containing occurrence records for the specified country.
 \description{
 BIEN_occurrence_country extracts occurrences records for the specified country/countries.
 }
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+}
 \examples{
 \dontrun{
-library(RPostgreSQL)
 BIEN_occurrence_country("Cuba")
 country_vector<-c("Cuba","Bahamas")
 BIEN_occurrence_country(country_vector)}
@@ -44,7 +55,7 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_family}},
   \code{\link{BIEN_occurrence_genus}},
   \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_shapefile}},
+  \code{\link{BIEN_occurrence_spatialpolygons}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
