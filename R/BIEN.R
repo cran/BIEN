@@ -971,13 +971,14 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
 #' BIEN_ranges_species(species_vector)
 #' BIEN_ranges_species(species_vector,match_names_only = TRUE)
-#' BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
+#' BIEN_ranges_species(species_vector,temp_dir)#saves ranges to a temporary directory
 #' BIEN_ranges_species("Abies_lasiocarpa")
-#' BIEN_ranges_species("Abies_lasiocarpa",tempdir())
+#' BIEN_ranges_species("Abies_lasiocarpa",temp_dir)
 #'
 #' #Reading files
 #' 
-#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
@@ -1081,16 +1082,16 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' library(rgdal)
 #' library(maps)
 #' genus_vector<-c("Abies","Acer")
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
 #' BIEN_ranges_genus(genus_vector)
 #' BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-#' BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
+#' BIEN_ranges_genus(genus_vector,temp_dir)#saves ranges to a specified working directory
 #' BIEN_ranges_genus("Abies")
-#' BIEN_ranges_genus("Abies",tempdir())
+#' BIEN_ranges_genus("Abies",temp_dir)
 #'
 #' #Reading files
 #' 
-#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
@@ -1191,9 +1192,9 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' @template ranges_spatial
 #' @return Range maps for all available species within the specified bounding box.
 #' @examples \dontrun{
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
-#' BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
+#' BIEN_ranges_box(42,43,-85,-84,directory = temp_dir)}
 #' @family range functions
 #' @export
 BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
@@ -1282,9 +1283,9 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' @template ranges_spatial
 #' @return Range maps for all available species that intersect the range of the focal species.
 #' @examples \dontrun{
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 #' BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
-#' directory = testwd,include.focal = TRUE)
+#' directory = temp_dir,include.focal = TRUE)
 #' species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
 #' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 #' @family range functions
