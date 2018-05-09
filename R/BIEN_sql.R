@@ -92,7 +92,7 @@
   
   
   if(!is.null(limit)){
-    query<-gsub(pattern = ";",replacement = paste(" LIMIT ",limit,";"),x = query)}
+    query<-gsub(pattern = " ;",replacement = paste(" LIMIT ",limit,";"),x = query)}
  
   
   
@@ -110,6 +110,7 @@
   if(return.query){
     query<-gsub(pattern = "\n",replacement = "",query)
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    DBI::dbDisconnect(con)
     return(query)
   }
   

@@ -1,13 +1,23 @@
+BIEN 1.2.3
+===============
+## NEW FEATURES
+* BIEN database updated to 4.0
+* Updated code to work with updated BIEN4.0 database structure.
+* Some functions now return slightly different fields, please take note!
+* Added functionality to notify users of important updates and upcoming updates to the database.
+
+## BUG FIXES
+* Fixed rare bug caused when specifying a "limit" in functions relying on spatialpolygons
+
 
 BIEN 1.2.1
 ===============
 ## NEW FEATURES
-
-## OTHER NEWS
+* Added BIEN_stem_sampling_protocol()
 
 ## BUG FIXES
-** Updated example directories to use file.path() to construct OS-independent paths
-
+* Updated example directories to use file.path() to construct OS-independent paths
+* Fixed a bug in BIEN_plot_sampling_protocol causing it to fail to return records for certain sampling protocols.
 
 BIEN 1.1.1
 ===============
@@ -48,6 +58,7 @@ BIEN 1.1.0
 * Made .BIEN_sql an internal function
 * Updated BIEN_trait functions to use new agg_traits schema
 * Added many more traits to the database.
+
 ===============
 BIEN 1.0.0
 ===============
