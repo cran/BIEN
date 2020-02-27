@@ -4,8 +4,15 @@
 \alias{BIEN_list_state}
 \title{Extract a species list by state/province}
 \usage{
-BIEN_list_state(country = NULL, country.code = NULL, state = NULL,
-  state.code = NULL, cultivated = FALSE, only.new.world = TRUE, ...)
+BIEN_list_state(
+  country = NULL,
+  country.code = NULL,
+  state = NULL,
+  state.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or a vector of countries equal in length to the vector of states/provinces.}
@@ -18,7 +25,7 @@ BIEN_list_state(country = NULL, country.code = NULL, state = NULL,
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -38,8 +45,10 @@ state_vector<-c("Michigan","Arizona")
 BIEN_list_state(country="United States", state= state_vector)}
 }
 \seealso{
-Other list functions: \code{\link{BIEN_list_all}},
-  \code{\link{BIEN_list_country}},
-  \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_spatialpolygons}}
+Other list functions: 
+\code{\link{BIEN_list_all}()},
+\code{\link{BIEN_list_country}()},
+\code{\link{BIEN_list_county}()},
+\code{\link{BIEN_list_spatialpolygons}()}
 }
+\concept{list functions}

@@ -4,17 +4,25 @@
 \alias{BIEN_occurrence_family}
 \title{Extract species occurrences by family.}
 \usage{
-BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
-  observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
-  ...)
+BIEN_occurrence_family(
+  family,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  observation.type = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
@@ -46,12 +54,14 @@ family_vector<-c("Theaceae","Ericaceae")
 BIEN_occurrence_family(family_vector)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_box}},
-  \code{\link{BIEN_occurrence_country}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_genus}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_species}},
-  \code{\link{BIEN_occurrence_state}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_box}()},
+\code{\link{BIEN_occurrence_country}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_genus}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_species}()},
+\code{\link{BIEN_occurrence_state}()}
 }
+\concept{occurrence functions}

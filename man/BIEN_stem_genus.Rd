@@ -4,17 +4,25 @@
 \alias{BIEN_stem_genus}
 \title{Extract stem data for specified genera from BIEN}
 \usage{
-BIEN_stem_genus(genus, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F, all.metadata = F,
-  ...)
+BIEN_stem_genus(
+  genus,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = F,
+  ...
+)
 }
 \arguments{
 \item{genus}{A single genus, or a vector of genera. Genera should be capitalized.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -49,8 +57,10 @@ BIEN_stem_genus(genus = genus_vector)
 BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
 }
 \seealso{
-Other stem functions: \code{\link{BIEN_stem_datasource}},
-  \code{\link{BIEN_stem_family}},
-  \code{\link{BIEN_stem_sampling_protocol}},
-  \code{\link{BIEN_stem_species}}
+Other stem functions: 
+\code{\link{BIEN_stem_datasource}()},
+\code{\link{BIEN_stem_family}()},
+\code{\link{BIEN_stem_sampling_protocol}()},
+\code{\link{BIEN_stem_species}()}
 }
+\concept{stem functions}

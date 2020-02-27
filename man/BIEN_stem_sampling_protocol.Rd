@@ -4,17 +4,25 @@
 \alias{BIEN_stem_sampling_protocol}
 \title{Download stem data using a specified sampling protocol.}
 \usage{
-BIEN_stem_sampling_protocol(sampling_protocol, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
-  all.metadata = F, ...)
+BIEN_stem_sampling_protocol(
+  sampling_protocol,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = F,
+  ...
+)
 }
 \arguments{
 \item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -44,8 +52,10 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 BIEN_stem_sampling_protocol("Point-intercept")}
 }
 \seealso{
-Other stem functions: \code{\link{BIEN_stem_datasource}},
-  \code{\link{BIEN_stem_family}},
-  \code{\link{BIEN_stem_genus}},
-  \code{\link{BIEN_stem_species}}
+Other stem functions: 
+\code{\link{BIEN_stem_datasource}()},
+\code{\link{BIEN_stem_family}()},
+\code{\link{BIEN_stem_genus}()},
+\code{\link{BIEN_stem_species}()}
 }
+\concept{stem functions}

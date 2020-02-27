@@ -8,11 +8,11 @@
 #' @keywords internal
 .cultivated_check<-function(cultivated){
   if(!cultivated){
-    query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
+    query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) AND is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",is_cultivated_observation,is_cultivated_in_region"
+    select<-",is_cultivated_observation,is_cultivated_in_region, is_location_cultivated"
   }
   
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
@@ -134,7 +134,7 @@
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (is_introduced=0 OR is_introduced IS NULL) "
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  
@@ -246,11 +246,11 @@ if(all.taxonomy){
 #' @keywords internal
 .cultivated_check_plot<-function(cultivated){
   if(!cultivated){
-    query<-"AND (view_full_occurrence_individual.is_cultivated_observation = 0 OR view_full_occurrence_individual.is_cultivated_observation IS NULL)"
+    query<-"AND (view_full_occurrence_individual.is_cultivated_observation = 0 OR view_full_occurrence_individual.is_cultivated_observation IS NULL) AND view_full_occurrence_individual.is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",view_full_occurrence_individual.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",view_full_occurrence_individual.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region,view_full_occurrence_individual.is_location_cultivated"
   }
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
@@ -341,7 +341,7 @@ if(all.taxonomy){
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (view_full_occurrence_individual.is_introduced=0 OR view_full_occurrence_individual.is_introduced IS NULL) "
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  
@@ -421,6 +421,51 @@ if(all.taxonomy){
   
   } 
 
+#
+
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @param species Single species or vector of species.
+#' @keywords internal
+.species_check<-function(species){    
+  
+  if(is.null(species)){
+    query<-""
+  }else{
+    query<-species_select<-paste(" AND", "scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ")  
+  }
+  
+  output<-as.data.frame(cbind(query),stringsAsFactors = F)  
+  colnames(output)<-c("query")
+  
+  return(output)  
+  
+} 
+
+#
+
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @param genus Single genus or vector of genera.
+#' @keywords internal
+.genus_check<-function(genus){    
+  
+  if(is.null(genus)){
+    query<-""
+  }else{
+    query<-species_select<-paste(" AND", "scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ")  
+  }
+  
+  output<-as.data.frame(cbind(query),stringsAsFactors = F)  
+  colnames(output)<-c("query")
+  
+  return(output)  
+  
+} 
+
+
 ########################################
 #Stem
 
@@ -432,11 +477,11 @@ if(all.taxonomy){
 .cultivated_check_stem<-function(cultivated){    
   
   if(!cultivated){
-    query<-"AND (analytical_stem.is_cultivated_observation = 0 OR analytical_stem.is_cultivated_observation IS NULL)"
+    query<-"AND (analytical_stem.is_cultivated_observation = 0 OR analytical_stem.is_cultivated_observation IS NULL) AND analytical_stem.is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",analytical_stem.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",analytical_stem.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region,analytical_stem.is_location_cultivated"
   }
   
   
@@ -517,7 +562,7 @@ if(all.taxonomy){
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (view_full_occurrence_individual.is_introduced=0 OR view_full_occurrence_individual.is_introduced IS NULL)"
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  

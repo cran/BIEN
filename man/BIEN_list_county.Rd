@@ -4,9 +4,17 @@
 \alias{BIEN_list_county}
 \title{Extract a species list by county.}
 \usage{
-BIEN_list_county(country = NULL, state = NULL, county = NULL,
-  country.code = NULL, state.code = NULL, county.code = NULL,
-  cultivated = FALSE, only.new.world = TRUE, ...)
+BIEN_list_county(
+  country = NULL,
+  state = NULL,
+  county = NULL,
+  country.code = NULL,
+  state.code = NULL,
+  county.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or vector of countries}
@@ -23,7 +31,7 @@ BIEN_list_county(country = NULL, state = NULL, county = NULL,
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -48,8 +56,10 @@ county_vector<-c("Kent","Kalamazoo")
 BIEN_list_county(country = "United States", state = "Michigan", county = county_vector)}
 }
 \seealso{
-Other list functions: \code{\link{BIEN_list_all}},
-  \code{\link{BIEN_list_country}},
-  \code{\link{BIEN_list_spatialpolygons}},
-  \code{\link{BIEN_list_state}}
+Other list functions: 
+\code{\link{BIEN_list_all}()},
+\code{\link{BIEN_list_country}()},
+\code{\link{BIEN_list_spatialpolygons}()},
+\code{\link{BIEN_list_state}()}
 }
+\concept{list functions}

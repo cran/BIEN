@@ -4,10 +4,19 @@
 \alias{BIEN_plot_country}
 \title{Download plot data from specified countries.}
 \usage{
-BIEN_plot_country(country = NULL, country.code = NULL, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
-  all.metadata = FALSE, ...)
+BIEN_plot_country(
+  country = NULL,
+  country.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = FALSE,
+  ...
+)
 }
 \arguments{
 \item{country}{A country or vector of countries.}
@@ -16,7 +25,7 @@ BIEN_plot_country(country = NULL, country.code = NULL, cultivated = FALSE,
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -49,12 +58,15 @@ BIEN_plot_country("Costa Rica")
 BIEN_plot_country(c("Costa Rica","Panama"))}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_plot_name}},
-  \code{\link{BIEN_plot_sampling_protocol}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_plot_name}()},
+\code{\link{BIEN_plot_sampling_protocol}()},
+\code{\link{BIEN_plot_spatialpolygons}()},
+\code{\link{BIEN_plot_state}()}
 }
+\concept{plot functions}

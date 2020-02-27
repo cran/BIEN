@@ -4,10 +4,23 @@
 \alias{BIEN_occurrence_box}
 \title{Extract species occurrence records by a latitude/longitude bounding box.}
 \usage{
-BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, observation.type = FALSE,
-  political.boundaries = TRUE, collection.info = F, ...)
+BIEN_occurrence_box(
+  min.lat,
+  max.lat,
+  min.long,
+  max.long,
+  species = NULL,
+  genus = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  observation.type = FALSE,
+  political.boundaries = TRUE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{min.lat}{Minimum latitude}
@@ -18,9 +31,13 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 
 \item{max.long}{Maximum longitude}
 
+\item{species}{Optional.  A single species or a vector of species.}
+
+\item{genus}{Optional. A single genus or a vector of genera.}
+
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -44,6 +61,8 @@ BIEN_occurrence_box extracts occurrences records falling within the specific are
 }
 \note{
 US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Specifying species and/or genera will limit records returned to that set of taxa.
 }
 \examples{
 \dontrun{
@@ -52,12 +71,14 @@ BIEN_occurrence_box(min.lat = 32,max.lat = 33,min.long = -114,max.long = -113,
 cultivated = TRUE, only.new.world = FALSE)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_country}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_family}},
-  \code{\link{BIEN_occurrence_genus}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_species}},
-  \code{\link{BIEN_occurrence_state}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_country}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_family}()},
+\code{\link{BIEN_occurrence_genus}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_species}()},
+\code{\link{BIEN_occurrence_state}()}
 }
+\concept{occurrence functions}
