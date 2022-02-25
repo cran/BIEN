@@ -7,13 +7,14 @@
 BIEN_occurrence_species(
   species,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   all.taxonomy = FALSE,
   native.status = FALSE,
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
+  only.geovalid = TRUE,
   ...
 )
 }
@@ -22,7 +23,7 @@ BIEN_occurrence_species(
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -35,6 +36,8 @@ BIEN_occurrence_species(
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
 \item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
+
+\item{only.geovalid}{Should the returned records be limited to those with validated coordinates?  Default is TRUE}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -52,7 +55,7 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 BIEN_occurrence_species("Abies amabilis")
 species_vector<-c("Abies amabilis", "Acer nigrum")
 BIEN_occurrence_species(species_vector)
-BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
+BIEN_occurrence_species(species_vector,all.taxonomy = TRUE)}
 }
 \seealso{
 Other occurrence functions: 

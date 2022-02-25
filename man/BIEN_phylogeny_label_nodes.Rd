@@ -6,8 +6,8 @@
 \usage{
 BIEN_phylogeny_label_nodes(
   phylogeny,
-  family = T,
-  genus = F,
+  family = TRUE,
+  genus = FALSE,
   other_taxa = NULL,
   ...
 )
@@ -30,29 +30,29 @@ Input phylogeny with labeled nodes.
 BIEN_phylogeny_label_nodes will label the nodes on a phylogeny based on either the BIEN taxonomy or user-supplied taxa.
 }
 \note{
-Information on the construction of the BIEN phylogenies is available online at http://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
+Information on the construction of the BIEN phylogenies is available online at https://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
 }
 \examples{
 \dontrun{
 phylogeny<-BIEN_phylogeny_conservative()
 
 phylogeny<-drop.tip(phy = phylogeny,tip = 101:length(phylogeny$tip.label))
-plot.phylo(x = phylogeny,show.tip.label = F)
+plot.phylo(x = phylogeny,show.tip.label = FALSE)
 
-fam_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = T)
-plot.phylo(x = fam_nodes,show.tip.label = F,show.node.label = T)
+fam_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = TRUE)
+plot.phylo(x = fam_nodes,show.tip.label = FALSE, show.node.label = TRUE)
 
-gen_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = T)
-plot.phylo(x = gen_nodes,show.tip.label = F,show.node.label = T)
+gen_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny, family = FALSE, genus = TRUE)
+plot.phylo(x = gen_nodes, show.tip.label = FALSE, show.node.label = TRUE)
 
-other_taxa<-as.data.frame(matrix(nrow = 10,ncol = 2))
+other_taxa <- as.data.frame(matrix(nrow = 10,ncol = 2))
 colnames(other_taxa)<-c("taxon","species")
 other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
 other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
 tax_nodes <- 
  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,
-                            family = F,genus = F,other_taxa = other_taxa)
-plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
+                            family = FALSE, genus = FALSE, other_taxa = other_taxa)
+plot.phylo(x = tax_nodes,show.tip.label = FALSE,show.node.label = TRUE)}
 }
 \seealso{
 Other phylogeny functions: 

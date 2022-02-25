@@ -11,6 +11,6 @@ Helper function to check data format.
 }
 \examples{
 \dontrun{
-is_log(only.new.world)}
+is_log(TRUE)}
 }
 \keyword{internal}

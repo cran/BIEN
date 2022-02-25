@@ -12,7 +12,7 @@ BIEN_list_county(
   state.code = NULL,
   county.code = NULL,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   ...
 )
 }
@@ -29,9 +29,9 @@ BIEN_list_county(
 
 \item{county.code}{A single county (or other secondary administrative boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return information on cultivation status?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
