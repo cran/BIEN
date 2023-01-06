@@ -5,7 +5,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
-library(sp) # A package for spatial data
+library(sf) # A package for spatial data
 
 ## ----load-vignette, eval = FALSE----------------------------------------------
 #  vignette("BIEN")
@@ -66,9 +66,15 @@ head(Xanthium_strumarium)
 #  
 #  #Now, let's take a look at where those occurrences are:
 #  
-#    map(regions = "Bahamas" ,fill = TRUE , col= "grey", bg = "light blue")
+#    map(regions = "Bahamas" ,
+#        fill = TRUE ,
+#        col= "grey",
+#        bg = "light blue")
 #  
-#    points(cbind(Bahamas$longitude,Bahamas$latitude), col = "blue", pch = 20, cex = 1)
+#    points(cbind(Bahamas$longitude,Bahamas$latitude),
+#           col = "blue",
+#           pch = 20,
+#           cex = 1)
 #  
 #  #Looks like some islands are considerably better sampled than others.
 #  
@@ -82,26 +88,37 @@ Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium struma
 
 #First, let's add a base map so that our range has some context:
 
-  map('world', fill = TRUE , col= "grey", bg = "light blue",
+  map('world', fill = TRUE ,
+      col= "grey",
+      bg = "light blue",
       xlim = c(-180, -20),
       ylim = c(-60, 80))
 
 #Now, we can add the range map:
-  plot(Xanthium_strumarium_range, col = "green", add = TRUE)
+  plot(Xanthium_strumarium_range[1],
+       col = "green",
+       add = TRUE)
 
 
 
 
 ## ----xs-range-and-points------------------------------------------------------
 
-map('world', fill = TRUE , col = "grey", bg = "light blue",
+map('world',
+    fill = TRUE ,
+    col = "grey",
+    bg = "light blue",
     xlim = c(-180, -20),
     ylim = c(-60, 80))
 
-plot(Xanthium_strumarium_range, col = "green", add = TRUE)
+plot(Xanthium_strumarium_range[1],
+     col = "green",
+     add = TRUE)
 
 points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
-       col = "blue", pch = 20, cex = 1)
+       col = "blue",
+       pch = 20,
+       cex = 1)
 
 
 

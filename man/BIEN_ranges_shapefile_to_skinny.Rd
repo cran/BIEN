@@ -7,7 +7,7 @@
 BIEN_ranges_shapefile_to_skinny(directory, raster, skinny_ranges_file = NULL)
 }
 \arguments{
-\item{directory}{The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.}
+\item{directory}{The directory where range shapefiles will be stored.  If NULL, a temporary directory will be used.}
 
 \item{raster}{A raster (which must have a CRS specified) to be used for rasterizing the ranges.}
 
@@ -22,10 +22,11 @@ BIEN_ranges_shapefile_to_skinny converts ranges to a "skinny" format to save spa
 \examples{
 \dontrun{
 BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum")),
-raster = raster::raster(crs=CRS( 
-"+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
- +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+raster = terra::rast(crs = "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
++units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",
+           extent = terra::ext(c(-5261554,5038446,-7434988,7165012 )),
+           resolution =c(100000,100000)
+           )
 )
 }
 }
@@ -36,8 +37,8 @@ Other range functions:
 \code{\link{BIEN_ranges_intersect_species}()},
 \code{\link{BIEN_ranges_list}()},
 \code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_sf}()},
 \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
-\code{\link{BIEN_ranges_spatialpolygons}()},
 \code{\link{BIEN_ranges_species_bulk}()},
 \code{\link{BIEN_ranges_species}()}
 }

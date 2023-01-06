@@ -12,7 +12,7 @@ BIEN_ranges_load_species(species, ...)
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{
-A SpatialPolygonsDataFrame containing range maps for the specified species.
+A sf containing range maps for the specified species.
 }
 \description{
 BIEN_ranges_load_species returns spatial data for the specified species.
@@ -21,14 +21,15 @@ BIEN_ranges_load_species returns spatial data for the specified species.
 \dontrun{
 library(maps)
 species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
-abies_maps<-BIEN_ranges_load_species(species = species_vector)
-xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
+abies_maps <- BIEN_ranges_load_species(species = species_vector)
+xanthium_strumarium <- BIEN_ranges_load_species(species = "Xanthium strumarium")
 
 #Plotting files
-plot(abies_maps)#plots the spatialpolygons, but doesn't mean much without any reference
+plot(abies_maps) # plots the sf, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(xanthium_strumarium,col="forest green",add = TRUE) #adds the range of X. strumarium
-plot(abies_maps[1,], add = TRUE, col ="light green")}
+plot(abies_maps[1,], add = TRUE, col ="light green")
+}
 }
 \seealso{
 Other range functions: 
@@ -36,9 +37,9 @@ Other range functions:
 \code{\link{BIEN_ranges_genus}()},
 \code{\link{BIEN_ranges_intersect_species}()},
 \code{\link{BIEN_ranges_list}()},
+\code{\link{BIEN_ranges_sf}()},
 \code{\link{BIEN_ranges_shapefile_to_skinny}()},
 \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
-\code{\link{BIEN_ranges_spatialpolygons}()},
 \code{\link{BIEN_ranges_species_bulk}()},
 \code{\link{BIEN_ranges_species}()}
 }
