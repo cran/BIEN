@@ -12,7 +12,7 @@
 
 <meta name="author" content="Brian Maitner" />
 
-<meta name="date" content="2023-01-05" />
+<meta name="date" content="2025-01-31" />
 
 <title>BIEN R package</title>
 
@@ -239,16 +239,19 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">BIEN R package</h1>
 <h4 class="author">Brian Maitner</h4>
-<h4 class="date">2023-01-05</h4>
+<h4 class="date">2025-01-31</h4>
 
 
 
 <p>The Botanical Information and Ecology Network(BIEN) R package
 provides access to the BIEN database as well as useful tools for working
 with the BIEN data.</p>
-<p>##Data Usage Agreement Please read the data usage agreement,
-available at: <a href="https://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/" class="uri">https://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/</a></p>
-<p>##Data Usage: Warnings and Caveats</p>
+<div id="data-usage-agreement" class="section level2">
+<h2>Data Usage Agreement</h2>
+<p>Please read the data usage agreement, available at: <a href="https://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/" class="uri">https://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/</a></p>
+</div>
+<div id="data-usage-warnings-and-caveats" class="section level2">
+<h2>Data Usage: Warnings and Caveats</h2>
 <p>Please be aware of quality and appropriateness of BIEN data for the
 analyses that you may wish to perform or information that you would like
 to obtain</p>
@@ -268,14 +271,19 @@ coordinates and cultivated status are uncertain or unverifiable.</p>
 <p>Hybrids - Hybrid species are assigned the specific epithet “x” by the
 TNRS. To view the full name information for these occurrences, set
 “all.taxonomy = TRUE”.</p>
-<p>##Database connection issues Some institution and computer programs
-(e.g. some antivirus programs) block the SQL connections that this
-package relies on. While we are exploring ways around this issue, at
-present the simplest method is to use the package on a computer/network
-that doesn’t block SQL connections.</p>
-<p>##Function Names Function names in the BIEN package follow a naming
-convention which was designed to make locating the desired function
-easier:</p>
+</div>
+<div id="database-connection-issues" class="section level2">
+<h2>Database connection issues</h2>
+<p>Some institution and computer programs (e.g. some antivirus programs)
+block the SQL connections that this package relies on. While we are
+exploring ways around this issue, at present the simplest method is to
+use the package on a computer/network that doesn’t block SQL
+connections.</p>
+</div>
+<div id="function-names" class="section level2">
+<h2>Function Names</h2>
+<p>Function names in the BIEN package follow a naming convention which
+was designed to make locating the desired function easier:</p>
 <ul>
 <li>All function names begin with the prefix “BIEN_”</li>
 <li>Functions to download occurrence records begin with the prefix
@@ -297,82 +305,148 @@ prefix “BIEN_list_”</li>
 <li>Functions to access metadata begin with the prefix
 “BIEN_metadata_”</li>
 </ul>
-<p>##Function Directory For full information on each function, see the
-associated help file.</p>
-<p>###BIEN_metadata functions *
-<code>BIEN_metadata_database_version</code> Returns the BIEN database
-version number and release date * <code>BIEN_metadata_match_data</code>
-Compares the stored results of two (old vs new) queries to check for
-additions or deletions. * <code>BIEN_metadata_citation</code> Generates
-information needed to cite data downloaded from BIEN. *
-<code>BIEN_metadata_list_political_names</code> Provides a list of
-political division names used by BIEN.</p>
-<p>###BIEN_list functions * <code>BIEN_list_all</code> Lists all species
-present in the BIEN database * <code>BIEN_list_country</code> Produces
-species lists by country * <code>BIEN_list_county</code> Produces
-species lists by county * <code>BIEN_list_state</code> Produces species
-lists by state/province * <code>BIEN_list_sf</code> Produces species
-lists using an sf object</p>
-<p>###BIEN_occurrence functions * <code>BIEN_occurrence_box</code>
-Returns all occurrence records within a GIS bounding box *
-<code>BIEN_occurrence_country</code> Returns all occurrence records
-within a given country * <code>BIEN_occurrence_family</code> Returns all
-occurrence records for a specified family *
-<code>BIEN_occurrence_genus</code> Returns all occurrence records for a
-specified genus * <code>BIEN_occurrence_species</code> Returns all
-occurrence records for a specified species *
-<code>BIEN_occurrence_state</code> Returns all occurrences records
-within a given state/province *
-<code>BIEN_occurrence_occurrences_per_species</code> Returns data on the
-number of occurrence records for species in the BIEN database *
-<code>BIEN_occurrence_sf</code> Returns occurrence records falling
-within the boundaries of an sf object.</p>
-<p>###BIEN_ranges functions * <code>BIEN_ranges_genus</code> Downloads
-range maps for all the species within a given genus/genera *
-<code>BIEN_ranges_species</code> Downloads range maps for given species
-* <code>BIEN_ranges_box</code> Downloads range maps intersecting a given
-GIS bounding box * <code>BIEN_ranges_list</code> Lists available range
-maps * <code>BIEN_ranges_sf</code> Downloads range maps intersecting a
-user-supplied sf object.</p>
-<p>###BIEN_trait functions * <code>BIEN_trait_family</code> Returns all
-available trait data for given families * <code>BIEN_trait_genus</code>
-Returns all available trait data for given genera *
-<code>BIEN_trait_list</code> Lists all available types of trait *
-<code>BIEN_trait_mean</code> Estimates species mean trait values using
-Genus or Family level data where needed *
-<code>BIEN_trait_species</code> Returns all available trait data for
-given species * <code>BIEN_trait_trait</code> Returns all available
-trait data for given trait(s) * <code>BIEN_trait_traitbyfamily</code>
-Returns specific trait data for given family *
-<code>BIEN_trait_traitbygenus</code> Returns specific trait data for
-given genus * <code>BIEN_trait_traitbyspecies</code> Returns specific
-trait data for given species *
-<code>BIEN_trait_traits_per_species</code> Returns data on the number of
-trait observations for each trait for each species in the BIEN
-database</p>
-<p>###BIEN_plot functions * <code>BIEN_plot_datasource</code> Downloads
-all plot data from a given datasource. *
-<code>BIEN_plot_list_datasource</code> List all datasources in the BIEN
-database. * <code>BIEN_plot_country</code> Downloads all plot data from
-specified countries. * <code>BIEN_plot_state</code> Downloads all plot
-data from specified states/provinces. *
-<code>BIEN_plot_list_sampling_protocols</code> List all available
-sampling protocols. * <code>BIEN_plot_sampling_protocol</code> Downloads
-all plot data using a specified sampling protocol.</p>
-<p>###BIEN_stem functions * <code>BIEN_stem_species</code> Downloads all
-stem data for given species. * <code>BIEN_stem_genus</code> Downloads
-all stem data for given genera. * <code>BIEN_stem_family</code>
-Downloads all stem data for given families.</p>
-<p>###BIEN_taxonomy functions * <code>BIEN_taxonomy_species</code>
-Downloads all taxonomic information for given species. *
-<code>BIEN_taxonomy_genus</code> Downloads all taxonomic information for
-given genera. * <code>BIEN_taxonomy_family</code> Downloads all
-taxonomic information for given families.</p>
-<p>###BIEN_phylogeny functions * <code>BIEN_phylogeny_complete</code>
-Downloads a specified number of the BIEN phylogeny replicates. *
-<code>BIEN_phylogeny_conservative</code> Downloads the conservative BIEN
-phylogeny, which only includes species with molecular data
-available.</p>
+</div>
+<div id="function-directory" class="section level2">
+<h2>Function Directory</h2>
+<p>For full information on each function, see the associated help
+file.</p>
+<div id="bien_metadata-functions" class="section level3">
+<h3>BIEN_metadata functions</h3>
+<ul>
+<li><code>BIEN_metadata_database_version</code> Returns the BIEN
+database version number and release date</li>
+<li><code>BIEN_metadata_match_data</code> Compares the stored results of
+two (old vs new) queries to check for additions or deletions.</li>
+<li><code>BIEN_metadata_citation</code> Generates information needed to
+cite data downloaded from BIEN.</li>
+<li><code>BIEN_metadata_list_political_names</code> Provides a list of
+political division names used by BIEN.</li>
+</ul>
+</div>
+<div id="bien_list-functions" class="section level3">
+<h3>BIEN_list functions</h3>
+<ul>
+<li><code>BIEN_list_all</code> Lists all species present in the BIEN
+database</li>
+<li><code>BIEN_list_country</code> Produces species lists by
+country</li>
+<li><code>BIEN_list_county</code> Produces species lists by county</li>
+<li><code>BIEN_list_state</code> Produces species lists by
+state/province</li>
+<li><code>BIEN_list_sf</code> Produces species lists using an sf
+object</li>
+</ul>
+</div>
+<div id="bien_occurrence-functions" class="section level3">
+<h3>BIEN_occurrence functions</h3>
+<ul>
+<li><code>BIEN_occurrence_box</code> Returns all occurrence records
+within a GIS bounding box</li>
+<li><code>BIEN_occurrence_country</code> Returns all occurrence records
+within a given country</li>
+<li><code>BIEN_occurrence_family</code> Returns all occurrence records
+for a specified family</li>
+<li><code>BIEN_occurrence_genus</code> Returns all occurrence records
+for a specified genus</li>
+<li><code>BIEN_occurrence_species</code> Returns all occurrence records
+for a specified species</li>
+<li><code>BIEN_occurrence_state</code> Returns all occurrences records
+within a given state/province</li>
+<li><code>BIEN_occurrence_occurrences_per_species</code> Returns data on
+the number of occurrence records for species in the BIEN database</li>
+<li><code>BIEN_occurrence_sf</code> Returns occurrence records falling
+within the boundaries of an sf object.</li>
+</ul>
+</div>
+<div id="bien_ranges-functions" class="section level3">
+<h3>BIEN_ranges functions</h3>
+<ul>
+<li><code>BIEN_ranges_genus</code> Downloads range maps for all the
+species within a given genus/genera</li>
+<li><code>BIEN_ranges_species</code> Downloads range maps for given
+species</li>
+<li><code>BIEN_ranges_box</code> Downloads range maps intersecting a
+given GIS bounding box</li>
+<li><code>BIEN_ranges_list</code> Lists available range maps</li>
+<li><code>BIEN_ranges_sf</code> Downloads range maps intersecting a
+user-supplied sf object.</li>
+</ul>
+</div>
+<div id="bien_trait-functions" class="section level3">
+<h3>BIEN_trait functions</h3>
+<ul>
+<li><code>BIEN_trait_family</code> Returns all available trait data for
+given families</li>
+<li><code>BIEN_trait_genus</code> Returns all available trait data for
+given genera</li>
+<li><code>BIEN_trait_list</code> Lists all available types of trait</li>
+<li><code>BIEN_trait_mean</code> Estimates species mean trait values
+using Genus or Family level data where needed</li>
+<li><code>BIEN_trait_species</code> Returns all available trait data for
+given species</li>
+<li><code>BIEN_trait_trait</code> Returns all available trait data for
+given trait(s)</li>
+<li><code>BIEN_trait_traitbyfamily</code> Returns specific trait data
+for given family</li>
+<li><code>BIEN_trait_traitbygenus</code> Returns specific trait data for
+given genus</li>
+<li><code>BIEN_trait_traitbyspecies</code> Returns specific trait data
+for given species</li>
+<li><code>BIEN_trait_traits_per_species</code> Returns data on the
+number of trait observations for each trait for each species in the BIEN
+database</li>
+</ul>
+</div>
+<div id="bien_plot-functions" class="section level3">
+<h3>BIEN_plot functions</h3>
+<ul>
+<li><code>BIEN_plot_datasource</code> Downloads all plot data from a
+given datasource.</li>
+<li><code>BIEN_plot_list_datasource</code> List all datasources in the
+BIEN database.</li>
+<li><code>BIEN_plot_country</code> Downloads all plot data from
+specified countries.</li>
+<li><code>BIEN_plot_state</code> Downloads all plot data from specified
+states/provinces.</li>
+<li><code>BIEN_plot_list_sampling_protocols</code> List all available
+sampling protocols.</li>
+<li><code>BIEN_plot_sampling_protocol</code> Downloads all plot data
+using a specified sampling protocol.</li>
+</ul>
+</div>
+<div id="bien_stem-functions" class="section level3">
+<h3>BIEN_stem functions</h3>
+<ul>
+<li><code>BIEN_stem_species</code> Downloads all stem data for given
+species.</li>
+<li><code>BIEN_stem_genus</code> Downloads all stem data for given
+genera.</li>
+<li><code>BIEN_stem_family</code> Downloads all stem data for given
+families.</li>
+</ul>
+</div>
+<div id="bien_taxonomy-functions" class="section level3">
+<h3>BIEN_taxonomy functions</h3>
+<ul>
+<li><code>BIEN_taxonomy_species</code> Downloads all taxonomic
+information for given species.</li>
+<li><code>BIEN_taxonomy_genus</code> Downloads all taxonomic information
+for given genera.</li>
+<li><code>BIEN_taxonomy_family</code> Downloads all taxonomic
+information for given families.</li>
+</ul>
+</div>
+<div id="bien_phylogeny-functions" class="section level3">
+<h3>BIEN_phylogeny functions</h3>
+<ul>
+<li><code>BIEN_phylogeny_complete</code> Downloads a specified number of
+the BIEN phylogeny replicates.</li>
+<li><code>BIEN_phylogeny_conservative</code> Downloads the conservative
+BIEN phylogeny, which only includes species with molecular data
+available.</li>
+</ul>
+</div>
+</div>
 
 
 

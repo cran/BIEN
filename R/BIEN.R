@@ -15,7 +15,7 @@
 #' BIEN_occurrence_species(species_vector,all.taxonomy = TRUE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_species<-function(species,
+BIEN_occurrence_species <- function(species,
                                   cultivated = FALSE,
                                   new.world = NULL,
                                   all.taxonomy = FALSE,
@@ -61,8 +61,7 @@ BIEN_occurrence_species<-function(species,
                  AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                  AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
                  AND (is_centroid IS NULL OR is_centroid=0) 
-                 AND scrubbed_species_binomial IS NOT NULL 
-                 ORDER BY scrubbed_species_binomial ;")
+                 AND scrubbed_species_binomial IS NOT NULL ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -142,18 +141,27 @@ BIEN_occurrence_sf <- function(sf,
   collection_ <- .collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,
-                        date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,
+                  political_$select," ,
+                  latitude, longitude, date_collected,datasource,dataset,
+                 dataowner,custodial_institution_codes,collection_code,
+                 a.datasource_id",collection_$select,cultivated_$select,
                  newworld_$select,observation_$select,"
                     FROM 
                           (SELECT * FROM view_full_occurrence_individual 
                            WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                           AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                           AND observation_type IN ('plot','specimen','literature','checklist') 
+                           AND is_geovalid = 1
+                           AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
+                           AND (is_centroid IS NULL OR is_centroid=0)
                            AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
-                    WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "
-                      AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
-                      AND (is_centroid IS NULL OR is_centroid=0) AND observation_type IN ('plot','specimen','literature','checklist') 
+                    WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",
+                      cultivated_$query,
+                      newworld_$query,
+                      natives_$query,
+                      observation_$query, "
+                      AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
+                      AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
+                      AND (is_centroid IS NULL OR is_centroid=0) 
                       AND scrubbed_species_binomial IS NOT NULL ;")
   
   # create query to retrieve
@@ -223,8 +231,7 @@ BIEN_list_country <- function(country = NULL,
                          AND scrubbed_species_binomial IS NOT NULL")  
     }
     
-    sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
-  
+
   # adjust for optional parameters
   
   if(!cultivated){
@@ -247,7 +254,7 @@ BIEN_list_country <- function(country = NULL,
   
   
   # form the final query
-  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, sql_order_by, " ;")
+  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, " ;")
   
   
   return(.BIEN_sql(query, ...))
@@ -359,8 +366,6 @@ BIEN_list_state <- function(country = NULL,
 
   }  
 
-  sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
-  
   # adjust for optional parameters
   if(!cultivated){
     
@@ -372,20 +377,10 @@ BIEN_list_state <- function(country = NULL,
 
   }
   
-  #if(!new.world){
-  #  sql_select <- paste(sql_select,",is_new_world")
-  #}else{
-  #  sql_where <- paste(sql_where, "AND is_new_world = 1 ")
-  #}
-  
   newworld_ <- .newworld_check(new.world)
   
   # form the final query
-  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, sql_order_by, " ;")
-  
-  
-  ## form the final query
-  #query <- paste(sql_select, sql_from, sql_where, sql_order_by, " ;")
+  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, " ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -515,8 +510,6 @@ BIEN_list_county <- function(country = NULL,
   }
   
   
-  sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
-  
   # adjust for optional parameters
   if(!cultivated){
     
@@ -537,11 +530,7 @@ BIEN_list_county <- function(country = NULL,
   newworld_ <- .newworld_check(new.world)
   
   # form the final query
-  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, sql_order_by, " ;")
-  
-  
-  ## form the final query
-  #query <- paste(sql_select, sql_from, sql_where, sql_order_by, " ;")
+  query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query,  " ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -560,7 +549,7 @@ BIEN_list_county <- function(country = NULL,
 #' @family list functions
 #' @export
 BIEN_list_all<-function( ...){
-  query <- paste("SELECT species FROM bien_species_all ORDER BY species ;")
+  query <- paste("SELECT species FROM bien_species_all ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -624,7 +613,6 @@ BIEN_list_sf <- function(sf,
   
   newworld_ <- .newworld_check(new.world)
   
-  #rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
   query <- paste("SELECT DISTINCT scrubbed_species_binomial",cultivated_select,newworld_$select ,"
                 FROM  
                   (SELECT * FROM view_full_occurrence_individual WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
@@ -718,6 +706,7 @@ BIEN_occurrence_genus <- function(genus,
 #'
 #'BIEN_occurrence_family extracts all occurrences for a given family (or families) from the BIEN database.
 #' @param family A single family or a vector of families.
+#' @param only.geovalid Should the returned records be limited to those with validated coordinates?  Default is TRUE
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified family/families.
 #' @examples \dontrun{
@@ -735,6 +724,7 @@ BIEN_occurrence_family <- function(family,
                                    natives.only = TRUE,
                                    political.boundaries = FALSE,
                                    collection.info = FALSE,
+                                   only.geovalid = TRUE,
                                    ...){
   
   .is_char(family)
@@ -746,6 +736,9 @@ BIEN_occurrence_family <- function(family,
   .is_log(natives.only)
   .is_log(political.boundaries)
   .is_log(collection.info)
+  .is_log(only.geovalid)
+  
+  
   
   #set conditions for query
   cultivated_<-.cultivated_check(cultivated)  
@@ -756,14 +749,24 @@ BIEN_occurrence_family <- function(family,
   political_<-.political_check(political.boundaries)  
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
+  observation_<-.observation_check(observation.type)
+  geovalid_<-.geovalid_check(only.geovalid)
+  
+  
   
   # set the query
-  query <- paste("SELECT scrubbed_family",taxonomy_$select,native_$select,political_$select,", scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+  query <- paste("SELECT scrubbed_family",taxonomy_$select,native_$select,political_$select,",
+                    scrubbed_species_binomial, latitude, longitude, date_collected,
+                    datasource,dataset, dataowner, custodial_institution_codes,
+                    collection_code, view_full_occurrence_individual.datasource_id",
+                    collection_$select, cultivated_$select, newworld_$select,
+                    observation_$select, geovalid_$select,"
                  FROM view_full_occurrence_individual 
-                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query, " 
-                    AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 
-                    AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                    AND observation_type IN ('plot','specimen','literature','checklist')
+                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",
+                 cultivated_$query,newworld_$query,natives_$query,observation_$query, geovalid_$query, " 
+                    AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')  
+                    AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
+                    AND (is_centroid IS NULL OR is_centroid=0) 
                     AND scrubbed_species_binomial IS NOT NULL ;")
   
   return(.BIEN_sql(query, ...))
@@ -919,6 +922,7 @@ BIEN_occurrence_state <- function(country = NULL,
 #' @param country A single country or a vector of country.
 #' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template occurrence
+#' @param only.geovalid Should the returned records be limited to those with validated coordinates?  Default is TRUE
 #' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
@@ -937,6 +941,7 @@ BIEN_occurrence_country <- function(country = NULL,
                                     observation.type = FALSE,
                                     political.boundaries = FALSE,
                                     collection.info = FALSE,
+                                    only.geovalid = TRUE,
                                     ...){
 
   .is_char(country)
@@ -949,8 +954,11 @@ BIEN_occurrence_country <- function(country = NULL,
   .is_log(observation.type)
   .is_log(political.boundaries)
   .is_log(collection.info)
+  .is_log(only.geovalid)
+  
   if(is.null(country)& is.null(country.code)) {
-    stop("Please supply either a country or 2-digit ISO code")}
+    stop("Please supply either a country or 2-digit ISO code")
+    }
   
   #set conditions for query
     
@@ -962,19 +970,30 @@ BIEN_occurrence_country <- function(country = NULL,
     political_ <- .political_check(political.boundaries)  
     natives_ <- .natives_check(natives.only)
     collection_ <- .collection_check(collection.info)
+    geovalid_<-.geovalid_check(only.geovalid)
+    
   
   
   # set the query
   
   
-  if(is.null(country.code)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,
-                                                  datasource,dataset,dataowner,custodial_institution_codes,collection_code,
-                                                  view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
-                                           FROM view_full_occurrence_individual 
-                                           WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," 
-                                            AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 
-                                            AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                                            AND observation_type IN ('plot','specimen','literature','checklist') ;")
+  if(is.null(country.code)){
+      query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,
+                      political_$select, native_$select,", latitude,
+                      longitude,date_collected, datasource, dataset ,dataowner,
+                      custodial_institution_codes,collection_code,
+                      view_full_occurrence_individual.datasource_id",
+                      collection_$select, cultivated_$select,
+                      newworld_$select, observation_$select, geovalid_$select, "
+                    FROM view_full_occurrence_individual
+                    WHERE country in
+                    (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",
+                    cultivated_$query,newworld_$query,natives_$query,
+                    geovalid_$query," 
+                    AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
+                    AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
+                    AND (is_centroid IS NULL OR is_centroid=0)",
+                    observation_$query,";")
   
   }else{
     query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude, 
@@ -984,9 +1003,9 @@ BIEN_occurrence_country <- function(country = NULL,
                    WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                       ",cultivated_$query,newworld_$query,natives_$query," 
                       AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 
-                      AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                      AND observation_type IN ('plot','specimen','literature','checklist')  
-                      AND scrubbed_species_binomial IS NOT NULL ;")
+                      AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0)",
+                      observation_$query, 
+                      "AND scrubbed_species_binomial IS NOT NULL ;")
     
     
   }
@@ -1287,7 +1306,7 @@ BIEN_ranges_species <- function(species,
     
     
     # set the query
-    query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
+    query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
@@ -1348,7 +1367,7 @@ BIEN_ranges_species <- function(species,
   
   if(match_names_only == TRUE){
     
-    rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
+    rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
     
     # create query to retrieve
     df <- .BIEN_sql(rangeQuery, ...)
@@ -1522,7 +1541,7 @@ BIEN_ranges_genus <- function(genus,
     
     
     # set the query
-    query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ORDER BY species ;",sep="")
+    query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ;",sep="")
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
@@ -1581,7 +1600,7 @@ BIEN_ranges_genus <- function(genus,
   
   if(match_names_only == TRUE){
     
-    query <- paste("SELECT species FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ORDER BY species ;",sep="")
+    query <- paste("SELECT species FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ;",sep="")
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
@@ -1779,7 +1798,12 @@ BIEN_ranges_intersect_species <- function(species,
     }  
     
     # set the query
-    query <- paste("SELECT b.species AS focal_species, a.species AS intersecting_species,a.species,a.gid, ST_AsText(a.geom) AS geom FROM ranges AS a, (SELECT species, geom FROM ranges WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
+    query <- paste("SELECT b.species AS focal_species, a.species 
+                   AS intersecting_species,a.species,a.gid, ST_AsText(a.geom) 
+                   AS geom 
+                   FROM ranges AS a, (SELECT species, geom 
+                                      FROM ranges 
+                                      WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
@@ -2014,7 +2038,7 @@ BIEN_ranges_load_species <- function(species,
   
   # set the query
   
-  query <- paste("SELECT ST_AsText(geom) as geometry,species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
+  query <- paste("SELECT ST_AsText(geom) as geometry,species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
   
   # create query to retrieve
   df <- .BIEN_sql(query, ...)
@@ -2053,7 +2077,7 @@ BIEN_ranges_load_species <- function(species,
 BIEN_ranges_list <- function( ...){
   
   # set the query
-  query <- paste("SELECT species,gid FROM ranges ORDER BY species ;")
+  query <- paste("SELECT species,gid FROM ranges ;")
   
   # create query to retrieve
   return(.BIEN_sql(query, ...))
@@ -2080,8 +2104,8 @@ BIEN_ranges_list <- function( ...){
 #' }
 #' @family range functions
 #' @importFrom sf read_sf st_transform st_crs
-#' @importFrom fasterize fasterize
-#' @importFrom raster raster
+#' @importFrom terra rasterize
+#' @importFrom terra rast
 #' @importFrom terra values
 #' @export
 BIEN_ranges_shapefile_to_skinny <- function(directory,
@@ -2096,19 +2120,18 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
   
   skinny_occurrences <- NULL
   
-  raster <- raster(raster) #can be removed once fasterize is updated to include terra
+  raster <- rast(raster)
   
   for(i in range_maps){
     
     #print(i)
     raster_i <- read_sf(i) |>
       st_transform(crs = st_crs(raster)) |>
-      fasterize(raster = raster,
-                fun = "any")
+      rasterize(y = raster)
     
     if(length(which(values(raster_i) > 0)) > 0){
       skinny_occurrences <- rbind(skinny_occurrences,
-                                  cbind(read_sf(i)$Species,
+                                  cbind(read_sf(i)$species,
                                         which(values(raster_i) > 0)))
     }#end if statement
   }#end i loop
@@ -2263,9 +2286,8 @@ BIEN_trait_mean <- function(species,
   
   
   #then, query the various taxonomic levels to get trait data
-  #old query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") ORDER BY family,taxon,trait_name ;")
-  
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (scrubbed_family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  scrubbed_genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ORDER BY scrubbed_family,scrubbed_species_binomial,trait_name ;")
+
+  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (scrubbed_family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  scrubbed_genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ;")
   
   traits_df <- suppressWarnings(.BIEN_sql(query, ...)) #suppress warnings to avoid the geom message
   #traits_df <- suppressWarnings(.BIEN_sql(query))
@@ -2583,7 +2605,7 @@ BIEN_trait_family <- function(family,
 BIEN_trait_list <- function( ...){
   
   # set the query
-  query <- paste("SELECT DISTINCT trait_name FROM agg_traits ORDER BY trait_name ;")
+  query <- paste("SELECT DISTINCT trait_name FROM agg_traits ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -2655,7 +2677,12 @@ BIEN_occurrence_records_per_species <- function(species = NULL,
   
   if(is.null(species)){    
     # set the query
-    query <- paste("SELECT DISTINCT scrubbed_species_binomial,count(*) FROM view_full_occurrence_individual WHERE is_geovalid = 1 AND latitude IS NOT NULL AND LONGITUDE IS NOT NULL GROUP BY scrubbed_species_binomial ;")
+    query <- paste("SELECT DISTINCT scrubbed_species_binomial,count(*)
+                   FROM view_full_occurrence_individual
+                   WHERE is_geovalid = 1
+                    AND latitude IS NOT NULL
+                    AND LONGITUDE IS NOT NULL
+                   GROUP BY scrubbed_species_binomial ;")
   }
   
   if(is.character(species)){
@@ -2700,8 +2727,7 @@ BIEN_trait_traits_per_species <- function(species = NULL,
   query <- paste("SELECT DISTINCT scrubbed_species_binomial, trait_name,count(*) 
                  FROM agg_traits",
                  species_query,
-                 "GROUP BY trait_name,scrubbed_species_binomial 
-                 ORDER BY scrubbed_species_binomial,trait_name ;")
+                 "GROUP BY trait_name,scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -3389,10 +3415,9 @@ BIEN_taxonomy_species <- function(species,
     sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
     sql_from <- paste(' FROM bien_taxonomy')
     sql_where <- paste(' WHERE scrubbed_species_binomial in (', paste(shQuote(species, type = "sh"),collapse = ', '), ') AND scrubbed_species_binomial IS NOT NULL')
-    sql_order_by <- paste(' ORDER BY higher_plant_group,scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author ')
-  
+
   # form the final query
-    query <- paste(sql_select, sql_from, sql_where, sql_order_by, " ;")
+    query <- paste(sql_select, sql_from, sql_where,  " ;")
   
   # execute the query
   
@@ -3422,10 +3447,9 @@ BIEN_taxonomy_genus <- function(genus,
     sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
     sql_from <- paste(" FROM bien_taxonomy")
     sql_where <- paste(" WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
-    sql_order_by <- paste(" ORDER BY higher_plant_group,scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author ")
-  
+
   # form the final query
-    query <- paste(sql_select, sql_from, sql_where, sql_order_by, " ;")
+    query <- paste(sql_select, sql_from, sql_where, " ;")
   
   # execute the query
     return(.BIEN_sql(query, ...))
@@ -3455,10 +3479,9 @@ BIEN_taxonomy_family <- function(family,
     sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
     sql_from <- paste(" FROM bien_taxonomy")
     sql_where <- paste(" WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
-    sql_order_by <- paste(" ORDER BY higher_plant_group,scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author ")
-  
+
   # form the final query
-    query <- paste(sql_select, sql_from, sql_where, sql_order_by, " ;")
+    query <- paste(sql_select, sql_from, sql_where, " ;")
     #print(query)
   
   # execute the query
@@ -3812,7 +3835,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     sources<-.BIEN_sql(query, ...)
     
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
@@ -3841,7 +3864,9 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url', fixed = TRUE)
     
     if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))>0){
-      citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
+      citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",
+                           paste(unique(sources$source_name[which(sources$is_herbarium==1)])|>sort(),
+                                 collapse = ", "),".",collapse = "",sep="")
     }
     if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))==0){
       citation[[3]]<-data.frame()
@@ -3851,10 +3876,13 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[4]]<-citation[[4]][c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')]
     
     if(!is.null(trait.dataframe)){
+      if(length(which(trait.sources$access=='public (notify the PIs)'))>0){
+        
       ack_trait_sources<-trait.sources[which(trait.sources$access=='public (notify the PIs)'),]
       ack_trait_sources<-ack_trait_sources[c('project_pi','project_pi_contact','access','source_citation','citation_bibtex')]
       colnames(ack_trait_sources)<-c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')
       citation[[4]]<-rbind(citation[[4]],ack_trait_sources)
+      }
     }
     
     
@@ -3918,7 +3946,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
   if(is.null(dataframe) & is.null(trait.dataframe)){
     
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
@@ -3947,7 +3975,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
   
   if((!is.null(trait.dataframe) |!is.null(trait.mean.dataframe)) & is.null(dataframe)){  
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
@@ -4050,6 +4078,42 @@ BIEN_metadata_list_political_names <- function(...){
   
 }
 
+####################
+
+#'Download data dictionaries
+#'
+#'BIEN_metadata_data_dictionaries downloads the data dictionaries for the BIEN database.
+#' @param ... Additional arguments passed to internal functions.
+#' @return A list containing data.frames containing different data dictionaries.
+#' "Tables" contains information on the contents of tables.
+#' "Columns" contains information on the contents of columns within tables.
+#' "Values" contains information on some of the values that are used to populated columns, particularly where these may be unclear.
+#' "rbien" contains information on some of the values returned by the BIEN R package.
+#' @family metadata functions
+#' @examples \dontrun{
+#' BIEN_metadata_data_dictionaries()}
+#' @keywords internal
+BIEN_metadata_data_dictionaries <- function(...){
+  
+  tables <- .BIEN_sql("SELECT * from data_dictionary_tables",...)
+  columns <- .BIEN_sql("SELECT * from data_dictionary_columns",...)
+  values <- .BIEN_sql("SELECT * from data_dictionary_values",...)
+  rbien <- .BIEN_sql("SELECT * from data_dictionary_rbien",...)
+  
+  
+  
+  data_dictionary <- list(tables =tables,
+                          columns = columns,
+                          values = values,
+                          rbien = rbien)
+  
+  
+  return(data_dictionary)
+  
+}
+
+
+
 ################################
 
 ############################
@@ -4115,8 +4179,7 @@ BIEN_stem_species <- function(species,
                    WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",
                       cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                       AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') 
-                      AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) 
-                   ORDER BY analytical_stem.scrubbed_species_binomial ;")
+                      AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -4185,8 +4248,7 @@ BIEN_stem_family <- function(family,
                  WHERE analytical_stem.scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",
                     cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                     AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') 
-                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
-                 ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial ;")
+                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -4254,8 +4316,7 @@ BIEN_stem_genus <- function(genus,
                  WHERE analytical_stem.scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",
                     cultivated_$query,newworld_$query,natives_$query, "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                     AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') 
-                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
-                 ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial ;")
+                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -4321,8 +4382,7 @@ BIEN_stem_datasource <- function(datasource,
                  WHERE analytical_stem.datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")",
                     cultivated_$query,newworld_$query,native_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                     AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') 
-                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
-                 ORDER BY analytical_stem.scrubbed_species_binomial ;")
+                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -4389,8 +4449,7 @@ BIEN_stem_sampling_protocol <- function(sampling_protocol,
                  WHERE analytical_stem.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
                     cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                     AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') 
-                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
-                 ORDER BY analytical_stem.scrubbed_species_binomial ;")
+                    AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) ;")
   
   return(.BIEN_sql(query, ...))
   

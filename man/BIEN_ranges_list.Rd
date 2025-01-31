@@ -28,11 +28,12 @@ Other range functions:
 \code{\link{BIEN_ranges_sf}()},
 \code{\link{BIEN_ranges_shapefile_to_skinny}()},
 \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
-\code{\link{BIEN_ranges_species_bulk}()},
-\code{\link{BIEN_ranges_species}()}
+\code{\link{BIEN_ranges_species}()},
+\code{\link{BIEN_ranges_species_bulk}()}
 
 Other metadata functions: 
 \code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_data_dictionaries}()},
 \code{\link{BIEN_metadata_database_version}()},
 \code{\link{BIEN_metadata_list_political_names}()},
 \code{\link{BIEN_metadata_match_data}()},

@@ -8,7 +8,7 @@ library(maps) #Useful for making quick maps of occurrences
 library(sf) # A package for spatial data
 
 ## ----load-vignette, eval = FALSE----------------------------------------------
-#  vignette("BIEN")
+# vignette("BIEN")
 
 ## ----xs-occurrences-----------------------------------------------------------
 
@@ -23,61 +23,61 @@ head(Xanthium_strumarium)
 
 
 ## ----xs-occurrences-pt-2, eval = FALSE----------------------------------------
-#  
-#  Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
-#                                                      cultivated = TRUE,
-#                                                      all.taxonomy = TRUE,
-#                                                      native.status = TRUE,
-#                                                      observation.type = TRUE,
-#                                                      political.boundaries = TRUE)
-#  
-#  
+# 
+# Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
+#                                                     cultivated = TRUE,
+#                                                     all.taxonomy = TRUE,
+#                                                     native.status = TRUE,
+#                                                     observation.type = TRUE,
+#                                                     political.boundaries = TRUE)
+# 
+# 
 
 ## ----map-xs, eval = FALSE-----------------------------------------------------
-#  # Make a quick map to plot our points on
-#  
-#    map('world', fill = TRUE, col= "grey", bg = "light blue")
-#  
-#  # Plot the points from the full query in red
-#  
-#    points(cbind(Xanthium_strumarium_full$longitude,
-#                 Xanthium_strumarium_full$latitude),
-#           col = "red",
-#           pch = 20,
-#           cex = 1)
-#  
-#  # Plot the points from the default query in blue
-#  
-#    points(cbind(Xanthium_strumarium$longitude,
-#                 Xanthium_strumarium$latitude),
-#           col = "blue",
-#           pch = 20,
-#           cex = 1)
-#  
+# # Make a quick map to plot our points on
+# 
+#   map('world', fill = TRUE, col= "grey", bg = "light blue")
+# 
+# # Plot the points from the full query in red
+# 
+#   points(cbind(Xanthium_strumarium_full$longitude,
+#                Xanthium_strumarium_full$latitude),
+#          col = "red",
+#          pch = 20,
+#          cex = 1)
+# 
+# # Plot the points from the default query in blue
+# 
+#   points(cbind(Xanthium_strumarium$longitude,
+#                Xanthium_strumarium$latitude),
+#          col = "blue",
+#          pch = 20,
+#          cex = 1)
+# 
 
 ## ----occs-bahamas, eval = FALSE-----------------------------------------------
-#  
-#  Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
-#  
-#  #Let's see how many species we have
-#  
-#    length(unique(Bahamas$scrubbed_species_binomial))
-#    #About 400 species with valid occurrence records.
-#  
-#  #Now, let's take a look at where those occurrences are:
-#  
-#    map(regions = "Bahamas" ,
-#        fill = TRUE ,
-#        col= "grey",
-#        bg = "light blue")
-#  
-#    points(cbind(Bahamas$longitude,Bahamas$latitude),
-#           col = "blue",
-#           pch = 20,
-#           cex = 1)
-#  
-#  #Looks like some islands are considerably better sampled than others.
-#  
+# 
+# Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
+# 
+# #Let's see how many species we have
+# 
+#   length(unique(Bahamas$scrubbed_species_binomial))
+#   #About 400 species with valid occurrence records.
+# 
+# #Now, let's take a look at where those occurrences are:
+# 
+#   map(regions = "Bahamas" ,
+#       fill = TRUE ,
+#       col= "grey",
+#       bg = "light blue")
+# 
+#   points(cbind(Bahamas$longitude,Bahamas$latitude),
+#          col = "blue",
+#          pch = 20,
+#          cex = 1)
+# 
+# #Looks like some islands are considerably better sampled than others.
+# 
 
 ## ----xs-range-----------------------------------------------------------------
 
@@ -123,36 +123,36 @@ points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
 
 
 ## ----luq-occs, eval = FALSE---------------------------------------------------
-#  
-#  LUQUILLO <- BIEN_plot_name(plot.name = "LUQUILLO")
-#  
-#  head(LUQUILLO)
-#  
+# 
+# LUQUILLO <- BIEN_plot_name(plot.name = "LUQUILLO")
+# 
+# head(LUQUILLO)
+# 
 
-## ---- eval = FALSE------------------------------------------------------------
-#  
-#  LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",
-#                                  cultivated = TRUE,
-#                                  all.taxonomy = TRUE,
-#                                  native.status = TRUE,
-#                                  political.boundaries = TRUE,
-#                                  all.metadata = TRUE)
-#  
+## ----eval = FALSE-------------------------------------------------------------
+# 
+# LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",
+#                                 cultivated = TRUE,
+#                                 all.taxonomy = TRUE,
+#                                 native.status = TRUE,
+#                                 political.boundaries = TRUE,
+#                                 all.metadata = TRUE)
+# 
 
 ## ----salix-traits, eval = FALSE-----------------------------------------------
-#  
-#  Salix_traits <- BIEN_trait_genus(genus = "Salix")
-#  
+# 
+# Salix_traits <- BIEN_trait_genus(genus = "Salix")
+# 
 
 ## ----trait-list, eval = FALSE-------------------------------------------------
-#  
-#  BIEN_trait_list()
-#  
+# 
+# BIEN_trait_list()
+# 
 
 ## ----leaf-area, eval = FALSE--------------------------------------------------
-#  
-#  leaf_area <- BIEN_trait_trait(trait = "leaf area")
-#  
+# 
+# leaf_area <- BIEN_trait_trait(trait = "leaf area")
+# 
 
 ## ----taxonomy-----------------------------------------------------------------
 
@@ -169,37 +169,37 @@ Asclepias_species <- unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepi
 
 
 ## ----phylogeny, eval = FALSE--------------------------------------------------
-#  
-#  phylo <- BIEN_phylogeny_conservative()
-#  
-#  #Let's make sure it looks alright
-#  
-#    plot.phylo(x = phylo, show.tip.label =  FALSE)
-#  
-#  #If we just want to see which species are included
-#  
-#    phylo_species <- phylo$tip.label
-#  
-#  
+# 
+# phylo <- BIEN_phylogeny_conservative()
+# 
+# #Let's make sure it looks alright
+# 
+#   plot.phylo(x = phylo, show.tip.label =  FALSE)
+# 
+# #If we just want to see which species are included
+# 
+#   phylo_species <- phylo$tip.label
+# 
+# 
 
 ## ----stems, eval = FALSE------------------------------------------------------
-#  
-#  Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
-#  
+# 
+# Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
+# 
 
 ## ----lists, eval = FALSE------------------------------------------------------
-#  
-#  Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
-#  
-#  #Notice that we find many more species listed than we found occurrence records for.  What happened?  There are many records coming from the Bahamas that lack coordinates.  These records are used used in the "_list_" functions, but not the occurrence functions.
-#  
+# 
+# Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
+# 
+# #Notice that we find many more species listed than we found occurrence records for.  What happened?  There are many records coming from the Bahamas that lack coordinates.  These records are used used in the "_list_" functions, but not the occurrence functions.
+# 
 
 ## ----lists-multi-country, eval = FALSE----------------------------------------
-#  
-#  country_vector <- c("Haiti","Dominican Republic")
-#  
-#  Haiti_DR <- BIEN_list_country(country = country_vector)
-#  
+# 
+# country_vector <- c("Haiti","Dominican Republic")
+# 
+# Haiti_DR <- BIEN_list_country(country = country_vector)
+# 
 
 ## ----lists-pol-divs-----------------------------------------------------------
 #To see all of the political division names, and associated codes, we can use this function:
@@ -225,37 +225,37 @@ BIEN_metadata_database_version()
 
 
 ## ----selaginella-occs, eval = FALSE-------------------------------------------
-#  
-#  Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides", new.world = NULL)
-#  
+# 
+# Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides", new.world = NULL)
+# 
 
 ## ----selaginella-md, eval = FALSE---------------------------------------------
-#  
-#  citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
-#  
+# 
+# citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+# 
 
 ## ----md-2, eval = FALSE-------------------------------------------------------
-#  
-#  temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
-#  
-#  
-#  citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-#                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-#                                        acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
-#  
-#  
+# 
+# temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
+# 
+# 
+# citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+#                                      bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+#                                       acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
+# 
+# 
 
 ## ----md-3, eval = FALSE-------------------------------------------------------
-#  #First, let's get some trait data:
-#  selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
-#  
-#  #Now, we just need to modify our previous bit of code to include the trait data as well:
-#  
-#  temp_dir <- file.path(tempdir(), "BIEN_temp")
-#  
-#  citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-#                                        trait.dataframe = selaginella_selaginoides_traits,
-#                                        bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-#                                        acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
-#  
+# #First, let's get some trait data:
+# selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
+# 
+# #Now, we just need to modify our previous bit of code to include the trait data as well:
+# 
+# temp_dir <- file.path(tempdir(), "BIEN_temp")
+# 
+# citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+#                                       trait.dataframe = selaginella_selaginoides_traits,
+#                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+#                                       acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
+# 
 
