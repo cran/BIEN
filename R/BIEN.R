@@ -52,12 +52,21 @@ BIEN_occurrence_species <- function(species,
   
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,latitude, longitude,date_collected,
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,
+                  native_$select,political_$select," ,latitude, longitude,date_collected,
                  datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
-                 collection_$select,cultivated_$select,newworld_$select,observation_$select,geovalid_$select,"
+                 collection_$select,
+                 cultivated_$select,
+                 newworld_$select,
+                 observation_$select,
+                 geovalid_$select,"
                  FROM view_full_occurrence_individual 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,observation_$query, geovalid_$query, "
+                 cultivated_$query,
+                 newworld_$query,
+                 natives_$query,
+                 observation_$query,
+                 geovalid_$query, "
                  AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                  AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
                  AND (is_centroid IS NULL OR is_centroid=0) 
@@ -73,6 +82,7 @@ BIEN_occurrence_species <- function(species,
 #'
 #'BIEN_occurrence_sf downloads occurrence records falling within a user-specified sf polygon
 #' @param sf An object of class sf. Note that the projection must be WGS84.
+#' @param only.geovalid Should the returned records be limited to those with validated coordinates?  Default is TRUE
 #' @template occurrence
 #' @return Dataframe containing occurrence records falling within the polygon.
 #' @examples \dontrun{
@@ -102,6 +112,7 @@ BIEN_occurrence_sf <- function(sf,
                                observation.type = FALSE,
                                political.boundaries = FALSE,
                                collection.info = FALSE,
+                               only.geovalid = TRUE,
                                ...){
   
   .is_log(cultivated)
@@ -112,6 +123,8 @@ BIEN_occurrence_sf <- function(sf,
   .is_log(political.boundaries)
   .is_log(natives.only)
   .is_log(collection.info)
+  .is_log(only.geovalid)
+  
   
   # Convert the sf to wkt (needed for sql query)  
   wkt <- sf |>
@@ -139,28 +152,33 @@ BIEN_occurrence_sf <- function(sf,
   political_ <- .political_check(political.boundaries)  
   natives_ <- .natives_check(natives.only)
   collection_ <- .collection_check(collection.info)
+  geovalid_<-.geovalid_check(only.geovalid)
+  
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,
-                  political_$select," ,
+  query <- paste("SELECT scrubbed_species_binomial",
+                 taxonomy_$select,
+                 native_$select,
+                 political_$select," ,
                   latitude, longitude, date_collected,datasource,dataset,
                  dataowner,custodial_institution_codes,collection_code,
                  a.datasource_id",collection_$select,cultivated_$select,
-                 newworld_$select,observation_$select,"
+                 newworld_$select,
+                 observation_$select,
+                 geovalid_$select,"
                     FROM 
                           (SELECT * FROM view_full_occurrence_individual 
                            WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                           AND is_geovalid = 1
                            AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
-                           AND (is_centroid IS NULL OR is_centroid=0)
                            AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
                     WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",
                       cultivated_$query,
                       newworld_$query,
                       natives_$query,
-                      observation_$query, "
+                      observation_$query,
+                      geovalid_$query, "
                       AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
-                      AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
+                      AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
                       AND (is_centroid IS NULL OR is_centroid=0) 
                       AND scrubbed_species_binomial IS NOT NULL ;")
   
@@ -2205,6 +2223,9 @@ BIEN_ranges_skinny_ranges_to_richness_raster <- function(skinny_ranges,
 ########################################
 ########################################
 
+# Traits section ----------------------------------------------------------
+
+
 #'Download trait data for given species.
 #'
 #'BIEN_trait_species extracts trait data for the species specified.
@@ -2234,9 +2255,12 @@ BIEN_trait_species <- function(species,
   source_ <- .source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit,
+                 method, latitude, longitude, elevation_m, url_source",
+                 source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
-                 FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
+                 FROM agg_traits WHERE scrubbed_species_binomial in (",
+                 paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -2277,17 +2301,30 @@ BIEN_trait_mean <- function(species,
   genera <- unlist(lapply(X = strsplit(species," "),
                           FUN = function(x){x[1]}))
   
-  query <- paste("SELECT DISTINCT scrubbed_family,scrubbed_genus,scrubbed_species_binomial FROM bien_taxonomy WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") or scrubbed_genus in (", paste(shQuote(genera, type = "sh"),collapse = ', '), ") ;")
+  query <- paste("SELECT DISTINCT scrubbed_family,scrubbed_genus,
+                 scrubbed_species_binomial FROM bien_taxonomy
+                 WHERE scrubbed_species_binomial in (",
+                 paste(shQuote(species, type = "sh"),collapse = ', '),
+                 ") or scrubbed_genus in (",
+                 paste(shQuote(genera, type = "sh"),collapse = ', '), ") ;")
   
   
   taxonomy_for_traits <- .BIEN_sql(query, ...)
   #taxonomy_for_traits <- .BIEN_sql(query)
-  if(length(taxonomy_for_traits) == 0){stop("Taxonomic data missing, check species name(s)")}
+  if(length(taxonomy_for_traits) == 0){
+    stop("Taxonomic data missing, check species name(s)")}
   
   
   #then, query the various taxonomic levels to get trait data
 
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (scrubbed_family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  scrubbed_genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ;")
+  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (",
+                 paste(shQuote(trait, type = "sh"),collapse = ', '),
+                 ") AND (scrubbed_family in (",
+                 paste(shQuote(unique(taxonomy_for_traits$scrubbed_family),
+                               type = "sh"),collapse = ', '),
+                 ") or  scrubbed_genus in (",
+                 paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus) ,
+                               type = "sh"),collapse = ', '), ")) ;")
   
   traits_df <- suppressWarnings(.BIEN_sql(query, ...)) #suppress warnings to avoid the geom message
   #traits_df <- suppressWarnings(.BIEN_sql(query))
@@ -2370,9 +2407,12 @@ BIEN_trait_trait <- function(trait,
   
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,",project_pi, project_pi_contact",
-                 political_$select, taxonomy_$select,", access, id 
-                 FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
+                 scrubbed_species_binomial, trait_name, trait_value, unit,
+                 method, latitude, longitude, elevation_m, url_source",
+                 source_$select ,", project_pi, project_pi_contact",
+                 political_$select, taxonomy_$select," , access, id 
+                 FROM agg_traits WHERE trait_name in (",
+                 paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
 
   return(.BIEN_sql(query, ...))
 
@@ -2412,7 +2452,9 @@ BIEN_trait_traitbyspecies <- function(species,
   source_ <- .source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit,
+                 method, latitude, longitude, elevation_m, url_source",
+                 source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") 
@@ -2457,11 +2499,15 @@ BIEN_trait_traitbygenus <- function(genus,
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name,
+                 trait_value, unit, method, latitude, longitude, elevation_m,
+                 url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
-                 WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
-                 AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
+                 WHERE scrubbed_genus in (",
+                 paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
+                 AND trait_name in (",
+                 paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
 
   return(.BIEN_sql(query, ...))
 
@@ -2502,11 +2548,16 @@ BIEN_trait_traitbyfamily <- function(family,
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial,
+                 trait_name, trait_value, unit, method, latitude, longitude,
+                 elevation_m, url_source",source_$select ,", project_pi,
+                 project_pi_contact",
                  political_$select, taxonomy_$select,", access, id
                  FROM agg_traits 
-                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
-                 AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
+                 WHERE scrubbed_family in (",
+                 paste(shQuote(family, type = "sh"),collapse = ', '), ") 
+                 AND trait_name in (",
+                 paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
 
   return(.BIEN_sql(query, ...))
 
@@ -2543,9 +2594,12 @@ BIEN_trait_genus <- function(genus,
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name,
+                 trait_value, unit, method, latitude, longitude, elevation_m,
+                 url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
-                 FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ;")
+                 FROM agg_traits WHERE scrubbed_genus in (",
+                 paste(shQuote(genus, type = "sh"),collapse = ', '), ") ;")
   
   return(.BIEN_sql(query, ...))
 
@@ -2583,9 +2637,13 @@ BIEN_trait_family <- function(family,
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial,
+                 trait_name, trait_value, unit, method, latitude, longitude,
+                 elevation_m, url_source",source_$select ,", project_pi,
+                 project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
-                 FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") ;")
+                 FROM agg_traits WHERE scrubbed_family in (",
+                 paste(shQuote(family, type = "sh"),collapse = ', '), ") ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -2645,14 +2703,20 @@ BIEN_trait_country <- function(country,
   source_<-.source_check_traits(source.citation)
   
   if(!is.null(trait.name)){
-    trait_select<-paste(" AND", "trait_name in (", paste(shQuote(trait.name, type = "sh"),collapse = ', '), ") ")  
+    trait_select<-paste(" AND", "trait_name in (",
+                        paste(shQuote(trait.name, type = "sh"),
+                              collapse = ', '), ") ")  
   }else{trait_select <- ""}
   
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit,
+                 method, latitude, longitude, elevation_m, url_source",
+                 source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
-                 FROM agg_traits WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",trait_select," ;")
+                 FROM agg_traits WHERE country in (",
+                 paste(shQuote(country, type = "sh"),collapse = ', '), ")",
+                 trait_select," ;")
   
   return(.BIEN_sql(query, ...))
   
@@ -2715,7 +2779,9 @@ BIEN_trait_traits_per_species <- function(species = NULL,
 
   if(!is.null(species)){
     
-    species_query<-paste("WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")")  
+    species_query<-paste("WHERE scrubbed_species_binomial in (",
+                         paste(shQuote(species, type = "sh"),collapse = ', '),
+                         ")")  
     
   }else{
     

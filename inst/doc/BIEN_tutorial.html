@@ -12,7 +12,7 @@
 
 <meta name="author" content="Brian Maitner" />
 
-<meta name="date" content="2025-01-31" />
+<meta name="date" content="2026-04-28" />
 
 <title>BIEN tutorial</title>
 
@@ -50,8 +50,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +63,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -340,16 +341,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">BIEN tutorial</h1>
 <h4 class="author">Brian Maitner</h4>
-<h4 class="date">2025-01-31</h4>
+<h4 class="date">2026-04-28</h4>
 
 
 
 <div id="setup" class="section level1">
 <h1>Setup</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(BIEN)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ape) <span class="co">#Package for working with phylogenies in R</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(maps) <span class="co">#Useful for making quick maps of occurrences</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># A package for spatial data</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ape) <span class="co">#Package for working with phylogenies in R</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(maps) <span class="co">#Useful for making quick maps of occurrences</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># A package for spatial data</span></span></code></pre></div>
 </div>
 <div id="an-overview-of-the-package" class="section level1">
 <h1>An overview of the package</h1>
@@ -858,10 +858,10 @@ of writing out the full country names.</p>
 ##          county_parish county_parish_ascii county_code
 ## 40001  Shymkent Qalasy     Shymkent Qalasy     1537272
 ## 40002 Türkistan Qalasy    Turkistan Qalasy     1537276
-## 40003  Shardara Audany     Shardara Audany     1524885
-## 40004   Töle Bi Audany      Tole Bi Audany     1521378
-## 40005  Qazyqurt Audany     Qazyqurt Audany     1521354
-## 40006     Sozaq Audany        Sozaq Audany     1518678</code></pre>
+## 40003  Shardara Aūdany     Shardara Audany     1524885
+## 40004   Töle Bī Aūdany      Tole Bi Audany     1521378
+## 40005  Qazyqurt Aūdany     Qazyqurt Audany     1521354
+## 40006     Sozaq Aūdany        Sozaq Audany     1518678</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#In addition to the standardized country, state (state_province_ascii) and county (county_parish_ascii) names, we have the associated codes that can be used in BIEN functions.</span></span>
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#Note that &#39;state&#39; refers to any primary political division (e.g. province), and &#39;county&#39; refers to any secondary political division (e.g. parish).</span></span>
 <span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a></span>

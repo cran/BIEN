@@ -1,8 +1,19 @@
 ## ----setup, include = FALSE---------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+library(BIEN)
+
+bien_vignette_online <- !is.null(
+  tryCatch(expr = BIEN:::.BIEN_sql("SELECT 1;"),
+           error = function(e){NULL})
+)
+
+knitr::opts_chunk$set(echo = TRUE,
+                      eval = bien_vignette_online)
+
+if(!bien_vignette_online){
+  message("BIEN database is unavailable or refusing connections; remote-query chunks were not evaluated while building this vignette.")
+}
 
 ## ----load-packages, message = F,warning = FALSE, results = 'hide'-------------
-library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
 library(sf) # A package for spatial data
